@@ -1,19 +1,19 @@
 # ChatApp-javaSE
 Aplikacja-Czat-LAN-JavaSE-
 
-Autor: Łukasz Obrębski
+Autor: Łukasz Obrębski<br>
 Data: 17.02.2017 - x
 
 
 //-----------------------------------------------------------OPIS----------------------------------------------
 
 Aplikacja będąca czatem pomiędzy dwoma użytkownikami, umożliwiająca komunikacje w sieci LAN
-
 <br>
 <br>
 <br>
 
 //-----------------------------------------------------------DO ZROBIENIA---------------------------------------
+<br>
 <br>
 <br>
 -------------------------------MAJOR-------------------------------
@@ -25,12 +25,14 @@ Aplikacja będąca czatem pomiędzy dwoma użytkownikami, umożliwiająca komuni
   
 2. Przetestować
  
-
+ <br>
+ <br>
 -------------------------------MINOR-------------------------------
 
 1. Dodać echo wiadomości wysyłanej na ekran GUI
 
-
+<br>
+<br>
 //-----------------------------------------------------------OSIĄGNIĘTO---------------------------------------------
 
 
