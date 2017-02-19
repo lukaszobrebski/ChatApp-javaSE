@@ -1,6 +1,10 @@
 # ChatApp-javaSE
 Aplikacja-Czat-LAN-JavaSE-
 
+Autor: Łukasz Obrębski
+Data: 17.02.2017 - x
+
+
 //-----------------------------------------------------------OPIS----------------------------------------------
 
 Aplikacja będąca czatem pomiędzy dwoma użytkownikami, umożliwiająca komunikacje w sieci LAN
