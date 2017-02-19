@@ -9,12 +9,12 @@ Data: 17.02.2017 - x
 
 Aplikacja będąca czatem pomiędzy dwoma użytkownikami, umożliwiająca komunikacje w sieci LAN
 
-
-
-
+<br>
+<br>
+<br>
 
 //-----------------------------------------------------------DO ZROBIENIA---------------------------------------
-
+<br><br>
 -------------------------------MAJOR-------------------------------
 
 1. Dokończyć nawiązywanie połączenia przy UDP Broadcast
