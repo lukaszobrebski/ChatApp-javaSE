@@ -1,9 +1,5 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ClientSocketManager extends SocketManager{
@@ -37,6 +33,7 @@ public class ClientSocketManager extends SocketManager{
 	public ClientSocketManager(int port) throws IOException
 	{
 		try {
+			this.port = port;
 			connection = new Socket(InetAddress.getLocalHost().getHostName(), port);
 	
 		} catch (IOException e) {

@@ -2,22 +2,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
+import java.net.DatagramSocket;
 import java.net.Socket;
 
 public abstract class SocketManager implements ISocketManager {
 
+	protected DatagramSocket UDPconnection;
 	protected Socket connection;
 	protected BufferedReader inputStream;
 	protected PrintWriter outputStream;
 	protected volatile String inputMessage, outputMessage, errorMessage;
 	protected volatile Boolean isNewMessageWaitingForDisplay = true;
+	protected Integer port=null;
 	
 	
 	
 	@Override
-	public void run() {}
-
+	public void run(){/*TO OVERRIDE*/}
+	
 	protected void establishInputOutputStream() throws IOException
 	{
 		try {

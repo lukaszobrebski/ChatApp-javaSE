@@ -33,35 +33,18 @@ public class GUIManager extends JFrame {
 	private JPanel welcomePanel;
 	private JPanel chatPanel;
 	private JTextArea chatTextArea;
+	private JEditorPane chatEditorPane;
 	
-	volatile SocketManager chatSocketManager;
-	Integer port = 2222;
-	String errorMessage;
+	private volatile SocketManager chatSocketManager;
+	private Integer port = 2222;
+	private String errorMessage;
 	
-	
-	
-	
-	/**
-	 * MAIN
-	 */
-	public static void main(String[] args) {
-	
-		GUIManager frame = null;
-		
-		try {
-			frame = new GUIManager();
-			frame.setVisible(true);
-				
-		} catch (Exception e) {
-				e.printStackTrace();
-		}
-		
-		while(true)
-			{
-			frame.read();
-			}
-
-	/*EventQueue.invokeLater(new Runnable() {
+	/*
+	*
+	*  Stary MAIN w wykonaniu WindowBuilder
+	*
+	*
+	EventQueue.invokeLater(new Runnable() {
 			public void run() {	
 				GUIManager frame = null;
 				try {
@@ -75,19 +58,91 @@ public class GUIManager extends JFrame {
 				frame.read();
 			}
 		});	*/
+	
+	/**
+	 * MAIN
+	 */
+	public static void main(String[] args) {
+	
+		final GUIManager frame;
+		Boolean shouldMainLoopWork = true;
+		
+		try {
+			frame = new GUIManager();
+			frame.setVisible(true);
+				
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		
+		new Runnable(){
+			public void run()
+			{
+					frame.read();
+						
+				try {
+					this.wait(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		
+	/*	while(shouldMainLoopWork)
+			{
+			frame.read();
+			}
+	*/
 	}
 
+	private void initializeServer()
+	{
+		welcomePanel.setVisible(false);
+		chatPanel.setVisible(true);
+		
+		try {
+			chatSocketManager = new ServerSocketManager(port);
+		} catch (IOException e) {
+			errorMessage = chatSocketManager.getErrorMessage();
+		}
+		
+		(new Thread(chatSocketManager)).start();
+		
+		welcomePanel.setVisible(false);
+		chatPanel.setVisible(true); 
+	}
+	
+	private void initializeClient()
+	{
+		
+		try {
+			chatSocketManager = new ClientSocketManager(port);
+		} catch (IOException e) {
+			e.printStackTrace();
+			errorMessage = chatSocketManager.getErrorMessage();
+		}
+		
+		(new Thread(chatSocketManager)).start();
+		
+		welcomePanel.setVisible(false);
+		chatPanel.setVisible(true);
+		
+	}
+	
+	private void sendMessage()
+	{
+		String message = chatEditorPane.getText();
+		chatSocketManager.sendMessage(message);
+		chatEditorPane.setText(null);
+	}
 	
 	public void read()
 	{
-		String message;
-		
 		if(chatSocketManager!=null)
 		{
-			
-			message = chatSocketManager.recieveMessage();
-			if(message!=null) System.out.println("WIADOMOSC: " + message);
-			
+			String message = chatSocketManager.recieveMessage();;
+
 			if(message!=null)
 			{
 				chatTextArea.append(message + "\n");
@@ -122,19 +177,7 @@ public class GUIManager extends JFrame {
 		serverButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {							//Utworz Serwer
 				
-				welcomePanel.setVisible(false);
-				chatPanel.setVisible(true);
-				
-				try {
-					chatSocketManager = new ServerSocketManager(port);
-				} catch (IOException e) {
-					errorMessage = chatSocketManager.getErrorMessage();
-				}
-				
-				(new Thread(chatSocketManager)).start();
-				
-				welcomePanel.setVisible(false);
-				chatPanel.setVisible(true); 
+				initializeServer();
 			}
 		});
 		serverButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -145,17 +188,7 @@ public class GUIManager extends JFrame {
 		clientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg1) {							//Utworz Klienta
 				
-				try {
-					chatSocketManager = new ClientSocketManager(port);
-				} catch (IOException e) {
-					e.printStackTrace();
-					errorMessage = chatSocketManager.getErrorMessage();
-				}
-				
-				(new Thread(chatSocketManager)).start();
-				
-				welcomePanel.setVisible(false);
-				chatPanel.setVisible(true);
+			initializeClient();
 				
 			}
 		});
@@ -171,17 +204,15 @@ public class GUIManager extends JFrame {
 		contentPane.add(chatPanel, "name_21007602345088");
 		chatPanel.setLayout(null);
 		
-		JEditorPane chatEditorPane = new JEditorPane();
+		chatEditorPane = new JEditorPane();
 		chatEditorPane.setBounds(10, 159, 564, 58);
 		chatPanel.add(chatEditorPane);
 		
 		JButton sendButton = new JButton("Wy\u015Blij");
 		sendButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {							//Wyslij wiadomosc
 				
-				String message = chatEditorPane.getText();
-				chatSocketManager.sendMessage(message);
-				chatEditorPane.setText(null);
+				sendMessage();
 			}
 		});
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
