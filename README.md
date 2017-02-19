@@ -14,7 +14,8 @@ Aplikacja będąca czatem pomiędzy dwoma użytkownikami, umożliwiająca komuni
 <br>
 
 //-----------------------------------------------------------DO ZROBIENIA---------------------------------------
-<br><br>
+<br>
+<br>
 -------------------------------MAJOR-------------------------------
 
 1. Dokończyć nawiązywanie połączenia przy UDP Broadcast
